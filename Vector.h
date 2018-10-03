@@ -23,11 +23,11 @@ public:
         size = 0;
         capacity = 1;
         list = new T[capacity];
-//        T* walker = list;
-//        while (walker != list + size) {
-//            *walker = 0;
-//            walker++;
-//        }
+        //        T* walker = list;
+        //        while (walker != list + size) {
+        //            *walker = 0;
+        //            walker++;
+        //        }
     }
 
     Vector(Vector<T> &v) {
@@ -66,14 +66,18 @@ public:
         for (int i = 0; i < many_to_copy; i++) {
             *(dest + i) = *(src + i);
         }
+        list = dest;
         //EXAAMINE THIS CODE......
-        src = dest;
+        delete[] src;
+//        src = dest;
+//        delete[] dest;
+
     }
 
     void print_list() {
-        
+
         T* walker = list;
-        
+
         while (walker != list + size) {
             cout << *walker << endl;
             walker++;
@@ -88,6 +92,7 @@ public:
     void push_back(T item) {
         //scan through the list
         if (size < capacity) {
+            
             T* walker = list;
             while (walker != list + size) {
                 walker++;
@@ -96,7 +101,7 @@ public:
             *walker = item;
             //enlarge the size of list by 1
             size += 1;
-            
+
         } else if (size == capacity) {
             //resizing the list by two-fold of original capacity
             capacity *= 2;
@@ -114,6 +119,11 @@ public:
             //enlarge the size of list by 1
             size += 1;
         }
+        
+    }
+    
+    void print_capacity() {
+        cout << "current capacity: " << capacity << endl;
     }
 
 };
