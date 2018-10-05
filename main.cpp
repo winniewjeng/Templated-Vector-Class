@@ -4,7 +4,7 @@
 int main(int argc, char** argv) {
 
     Vector<int> v;
-    for (int i = 0; i < 10; i++){
+    for (int i = 0; i < 12; i++){
         v.push_back(i);
     }
     v.pop_back();

@@ -21,15 +21,15 @@ public:
 
     Vector() {
         size = 0;
-        capacity = 100;
+        capacity = 1;
         list = new T[capacity];
     }
 
     //copy constructor
 
     Vector(const Vector& other) {
-        this->size = other.size;
-        this->capacity = other.capacity;
+        size = other.size;
+        capacity = other.capacity;
         list = new T[other.capacity]; //allocate space
         copy_list(list, other.list, size);
     }
@@ -51,9 +51,9 @@ public:
         delete[] this->list;
 
         //instantiate all the attributes of lhs again
-        this->capacity = rhs.capacity;
-        this->size = rhs.size;
-        this->list = allocate(list, capacity); //allocate space for the lhs
+        capacity = rhs.capacity;
+        size = rhs.size;
+        list = allocate(list, capacity); //allocate space for the lhs
 
         //copy the junk over.
         copy_list(list, rhs.list, size);
@@ -87,7 +87,6 @@ public:
         *placer = item;
         //increment the size by 1
         size++;
-        //      
         delete[] list;
         return destination;
     }
@@ -101,20 +100,20 @@ public:
     void pop_back() {
 
         size--;
-        //        if (size == capacity / 4) {
-        //            T* desitnation = allocate(list, capacity);
-        //            copy_list(desitnation, list, size);
-        //        }
-    }
-
-    void print_capacity() {
-        cout << "current capacity: " << capacity << endl;
+        
+        //resize the array if the capacity exceeds size by fourfold
+        if (capacity / 4 >= size) {
+            capacity /= 2;
+            T* desitnation = allocate(list, capacity);
+            copy_list(desitnation, list, size);
+        }
     }
 
     friend ostream& operator<<(ostream& outs, const Vector& print_me) {
         //code goes here.
         for (int i = 0; i < print_me.size; i++) {
-            outs << print_me.list[i] << "  ";
+            outs << print_me.list[i] << "    ";
+            //print capacity
         }
         return outs;
     }
